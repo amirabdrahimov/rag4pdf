@@ -13,6 +13,9 @@ class Settings:
     ollama_api_url: str = os.getenv("OLLAMA_API_URL", "http://localhost:11434/api/generate")
     ollama_model: str = os.getenv("OLLAMA_MODEL", "deepseek-r1:1.5b")
     ollama_timeout_sec: int = int(os.getenv("OLLAMA_TIMEOUT_SEC", "300"))
+    mlflow_enabled: bool = os.getenv("MLFLOW_ENABLED", "true").lower() in {"1", "true", "yes", "on"}
+    mlflow_tracking_uri: str = os.getenv("MLFLOW_TRACKING_URI", "file:./mlruns")
+    mlflow_experiment_name: str = os.getenv("MLFLOW_EXPERIMENT_NAME", "rag4pdf")
     chunk_size: int = 500
     chunk_overlap: int = 50
 

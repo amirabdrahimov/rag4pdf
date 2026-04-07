@@ -143,6 +143,11 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+mlruns/
+
+# Data files
+.rag_index/
+data/
 
 # Spyder project settings
 .spyderproject
