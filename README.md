@@ -12,6 +12,34 @@ Local PDF RAG with FAISS, SentenceTransformers, Ollama, and MLflow tracking.
 python start.py --query "What is the main synthesis method?"
 ```
 
+4. Run the FastAPI service:
+
+```bash
+uvicorn main:app --reload
+```
+
+POST JSON to `/ask`:
+
+```json
+{
+	"question": "What is the main synthesis method?",
+	"top_k": 4
+}
+```
+
+For example:
+
+```python
+import requests
+r = requests.post(
+"http://127.0.0.1:8000/ask",
+json={"question": "What is the main synthesis method?", "top_k": 4},
+timeout=120,
+)
+print(r.status_code)
+print(r.json())
+```
+
 ## MLflow
 
 MLflow is enabled by default and writes local runs to `./mlruns`.
@@ -27,6 +55,11 @@ Each run logs:
 - ingestion and chunk counts during index initialization
 - retrieval parameters and answer length for each query
 - retrieved chunks and final answer as artifacts
+
+The FastAPI service exposes:
+
+- `GET /health` for initialization status
+- `POST /ask` for question answering
 
 ## Notes
 
