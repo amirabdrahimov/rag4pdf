@@ -1,0 +1,19 @@
+services:
+  rag4pdf:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      OLLAMA_API_URL: http://host.docker.internal:11434/api/generate
+      OLLAMA_MODEL: deepseek-r1:1.5b
+      MLFLOW_ENABLED: "true"
+      MLFLOW_TRACKING_URI: file:/app/mlruns
+      MLFLOW_EXPERIMENT_NAME: rag4pdf
+    volumes:
+      - ./.rag_index:/app/.rag_index
+      - ./mlruns:/app/mlruns
+      - ./data:/app/data:ro
+    extra_hosts:
+      - "host.docker.internal:host-gateway"

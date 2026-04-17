@@ -65,3 +65,25 @@ The FastAPI service exposes:
 
 - The first run may build the FAISS index into `.rag_index/`.
 - Subsequent runs reuse the saved index and metadata if present.
+
+## Docker
+
+Build and run with Docker Compose:
+
+```bash
+docker compose up --build
+```
+
+Then call the API:
+
+```bash
+curl -X POST "http://127.0.0.1:8000/ask" \
+	-H "Content-Type: application/json" \
+	-d '{"question":"What is the main synthesis method?","top_k":4}'
+```
+
+Notes for containers:
+
+- `OLLAMA_API_URL` is set to `http://host.docker.internal:11434/api/generate` so the container can reach Ollama running on your Mac host.
+- `data/` is mounted read-only into `/app/data`.
+- `.rag_index/` and `mlruns/` are mounted so index and MLflow runs persist across container restarts.
